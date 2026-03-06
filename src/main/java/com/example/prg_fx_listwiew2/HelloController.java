@@ -98,11 +98,11 @@ public class HelloController {
             vybranyUkol.setPredmet(((RadioButton) predmet.getSelectedToggle()).getText());
             vybranyUkol.setPriorita(((RadioButton) priorita.getSelectedToggle()).getText());
             vybranyUkol.setSplneno(splneno.isSelected());
+            ukolListView.refresh();
             textFieldNazevUkolu.clear();
             predmet.getSelectedToggle().setSelected(false);
             priorita.getSelectedToggle().setSelected(false);
             splneno.setSelected(false);
-            ukolListView.refresh();
         }else{
             labelDetail.setText("NEJSOU ZADANÉ POTŘEBNÉ INFORMACE");
         }
@@ -149,6 +149,19 @@ public class HelloController {
         }
         ukolListView.setItems(ukolNesplnenoObservableList);
     }
+
+    @FXML
+    public void handleShowNapoveda(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("NÁPOVĚDA");
+        alert.setHeaderText("Zde je nápověda k programu:");
+        alert.setContentText("Soubor --> Zavřít\n Zobrazit(filtr) ----> Vše, Pouze splněné, pouze nesplněné.  \n musíte zadat všechny údaje abyste mohli pridat polozku do ukolnicku ");
+        alert.showAndWait();
+        if(alert.getResult()==ButtonType.OK){
+            Platform.exit();
+        }
+    }
+
 
     public void handleShowZavritProgram(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

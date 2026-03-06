@@ -104,7 +104,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Nápověda">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleShowNapoveda" text="Zobrazit nápovědu" />
                   </items>
                 </Menu>
               </menus>

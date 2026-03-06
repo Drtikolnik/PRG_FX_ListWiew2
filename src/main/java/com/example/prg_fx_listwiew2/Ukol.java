@@ -15,7 +15,7 @@ public Ukol(String jmeno, String predmet, String priorita, boolean splneno) {
 }
 
 public String toString(){
-    String stav = splneno ? "[HOTOVO]" : "[ ]";
+    String stav = splneno ? "[SPLNĚNO]" : "[NESPLĚNO]";
     return jmeno+ " " +predmet+ " " +priorita+ " " +stav;
 }
 
@@ -34,5 +34,21 @@ public String toString(){
 
     public boolean isSplneno() {
         return splneno;
+    }
+
+    public void setJmeno(String jmeno) {
+        this.jmeno = jmeno;
+    }
+
+    public void setPredmet(String predmet) {
+        this.predmet = predmet;
+    }
+
+    public void setPriorita(String priorita) {
+        this.priorita = priorita;
+    }
+
+    public void setSplneno(boolean splneno) {
+        this.splneno = splneno;
     }
 }

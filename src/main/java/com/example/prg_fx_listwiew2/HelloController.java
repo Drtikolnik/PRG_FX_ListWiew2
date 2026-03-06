@@ -1,5 +1,6 @@
 package com.example.prg_fx_listwiew2;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,6 +29,10 @@ public class HelloController {
     private Button buttonPridat;
     @FXML
     private Button buttonVybrat;
+    @FXML
+    private Button buttonUpravit;
+    @FXML
+    private Button buttonSmazat;
 
 
 
@@ -38,12 +43,19 @@ public class HelloController {
 
     @FXML
     protected void onPridat() {
-        Ukol ukol = new Ukol(textFieldNazevUkolu.getText(), ((RadioButton) predmet.getSelectedToggle()).getText(), ((RadioButton) priorita.getSelectedToggle()).getText(), splneno.isSelected() );
-        ukolObservableList.add(ukol);
-        ukolListView.setItems(ukolObservableList);
-        predmet.getSelectedToggle().setSelected(false);
-        priorita.getSelectedToggle().setSelected(false);
-        splneno.setSelected(false);
+        if(textFieldNazevUkolu.getText()!=null && !textFieldNazevUkolu.getText().isEmpty() &&  predmet.getSelectedToggle()!=null && priorita.getSelectedToggle()!=null) {
+            Ukol ukol = new Ukol(textFieldNazevUkolu.getText(), ((RadioButton) predmet.getSelectedToggle()).getText(), ((RadioButton) priorita.getSelectedToggle()).getText(), splneno.isSelected() );
+            ukolObservableList.add(ukol);
+            ukolListView.setItems(ukolObservableList);
+            textFieldNazevUkolu.clear();
+            predmet.getSelectedToggle().setSelected(false);
+            priorita.getSelectedToggle().setSelected(false);
+            splneno.setSelected(false);
+        }else{
+            labelDetail.setText("NEJSOU ZADANÉ POTŘEBNÉ INFORMACE");
+        }
+
+
 
     }
 
@@ -51,8 +63,107 @@ public class HelloController {
     protected void onVybrat() {
         Ukol vybranyUkol = ukolListView.getSelectionModel().getSelectedItem();
 
-        String stav = vybranyUkol.isSplneno() ? "[SPLNĚNO]" : "[NESPLNĚNO]";
-        labelDetail.setText("Název: " +vybranyUkol.getJmeno()+ " Předmět: " +vybranyUkol.getPredmet()+ " Priorita: " +vybranyUkol.getPriorita()+ " Stav: " +stav );
+        if (vybranyUkol != null) {
+            textFieldNazevUkolu.setText(vybranyUkol.getJmeno());
+            switch (vybranyUkol.getPredmet()) {
+                case "Matematika" -> predmet1.setSelected(true);
+                case "Český jazyk" -> predmet2.setSelected(true);
+                case "Literatura" -> predmet3.setSelected(true);
+                case "Programování" -> predmet4.setSelected(true);
+                case "Uživatelské rozhraní" -> predmet5.setSelected(true);
+            }
+            switch (vybranyUkol.getPriorita()) {
+                case "Nízká" -> priorita1.setSelected(true);
+                case "Střední" -> priorita2.setSelected(true);
+                case "Vysoká" -> priorita3.setSelected(true);
+            }
+            if(splneno.isSelected()) {
+                splneno.setSelected(true);
+            }
+
+            String stav = vybranyUkol.isSplneno() ? "[SPLNĚNO]" : "[NESPLNĚNO]";
+            labelDetail.setText("Název: " +vybranyUkol.getJmeno()+ ", Předmět: " +vybranyUkol.getPredmet()+ ", Priorita: " +vybranyUkol.getPriorita()+ ", Stav: " +stav );
+        }else{
+            labelDetail.setText("NENÍ VYBRANÝ ŽÁDNÝ ÚKOL");
+        }
+
     }
+
+    @FXML
+    protected void onUpravit() {
+        Ukol vybranyUkol = ukolListView.getSelectionModel().getSelectedItem();
+
+        if(textFieldNazevUkolu.getText()!=null && !textFieldNazevUkolu.getText().isEmpty() &&  predmet.getSelectedToggle()!=null && priorita.getSelectedToggle()!=null) {
+            vybranyUkol.setJmeno(textFieldNazevUkolu.getText());
+            vybranyUkol.setPredmet(((RadioButton) predmet.getSelectedToggle()).getText());
+            vybranyUkol.setPriorita(((RadioButton) priorita.getSelectedToggle()).getText());
+            vybranyUkol.setSplneno(splneno.isSelected());
+            textFieldNazevUkolu.clear();
+            predmet.getSelectedToggle().setSelected(false);
+            priorita.getSelectedToggle().setSelected(false);
+            splneno.setSelected(false);
+            ukolListView.refresh();
+        }else{
+            labelDetail.setText("NEJSOU ZADANÉ POTŘEBNÉ INFORMACE");
+        }
+
+
+    }
+
+    @FXML
+    protected void onSmazat() {
+        if(ukolListView.getSelectionModel().getSelectedItem()!=null){
+            ukolObservableList.remove(ukolListView.getSelectionModel().getSelectedItem()) ;
+            ukolListView.refresh();
+        }else{
+            labelDetail.setText("NENÍ VYBRANÝ ŽÁDNÝ ÚKOL");
+        }
+
+    }
+
+
+
+    @FXML
+    protected void onButtonFiltrVse() {
+        ukolListView.setItems(ukolObservableList);
+    }
+
+    @FXML
+    protected void onButtonFiltrSplneno() {
+        ObservableList<Ukol> ukolSplnenoObservableList = FXCollections.observableArrayList();
+        for (Ukol ukol : ukolObservableList) {
+            if (ukol.isSplneno()) {
+                ukolSplnenoObservableList.add(ukol);
+            }
+        }
+        ukolListView.setItems(ukolSplnenoObservableList);
+    }
+
+    @FXML
+    protected void onButtonFiltrNesplneno() {
+        ObservableList<Ukol> ukolNesplnenoObservableList = FXCollections.observableArrayList();
+        for (Ukol ukol : ukolObservableList) {
+            if (!ukol.isSplneno()) {
+                ukolNesplnenoObservableList.add(ukol);
+            }
+        }
+        ukolListView.setItems(ukolNesplnenoObservableList);
+    }
+
+    public void handleShowZavritProgram(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ZAVŘENÍ PROGRAMU");
+        alert.setHeaderText("Chcete opravdu zavřít program?");
+        alert.setContentText("Zavření programu vymaže všechna uložená data");
+        alert.showAndWait();
+        if(alert.getResult()==ButtonType.OK){
+            Platform.exit();
+        }
+    }
+
+
+
+
+
 
 }

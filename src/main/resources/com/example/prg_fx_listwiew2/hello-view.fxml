@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prg_fx_listwiew2.HelloController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prg_fx_listwiew2.HelloController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="200.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="205.0" />
@@ -32,7 +32,8 @@
       <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="131.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
@@ -81,7 +82,7 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
-            <Button fx:id="buttonPridat" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPridat" prefHeight="41.0" prefWidth="102.0" text="PŘIDAT" />
+            <Button fx:id="buttonPridat" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPridat" prefHeight="40.0" prefWidth="100.0" text="PŘIDAT" />
          </children>
       </HBox>
       <ListView fx:id="ukolListView" prefHeight="129.0" prefWidth="600.0" GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.rowSpan="3" />
@@ -89,17 +90,19 @@
          <children>
             <MenuBar prefHeight="25.0" prefWidth="917.0">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="Soubor">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleShowZavritProgram" text="Zavřít" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu mnemonicParsing="false" text="Zobrazit">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" onAction="#onButtonFiltrVse" text="Vše" />
+                        <MenuItem mnemonicParsing="false" onAction="#onButtonFiltrNesplneno" text="Nesplněné" />
+                        <MenuItem mnemonicParsing="false" onAction="#onButtonFiltrSplneno" text="Splněné" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
+                <Menu mnemonicParsing="false" text="Nápověda">
                   <items>
                     <MenuItem mnemonicParsing="false" text="About" />
                   </items>
@@ -108,15 +111,24 @@
             </MenuBar>
          </children>
       </HBox>
-      <Label fx:id="label_detail" text="Detail?" GridPane.rowIndex="4" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
          <children>
-            <Button fx:id="buttonVybrat" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onVybrat" prefHeight="41.0" prefWidth="102.0" text="VYBRAT" />
+            <Button fx:id="buttonVybrat" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onVybrat" prefHeight="40.0" prefWidth="100.0" text="VYBRAT" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="8">
          <children>
-            <Label fx:id="labelDetail" alignment="CENTER" prefHeight="224.0" prefWidth="678.0" text="Detail" />
+            <Label fx:id="labelDetail" alignment="CENTER" prefHeight="224.0" prefWidth="678.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+         <children>
+            <Button fx:id="buttonUpravit" mnemonicParsing="false" onAction="#onUpravit" prefHeight="40.0" prefWidth="100.0" text="UPRAVIT" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+         <children>
+            <Button fx:id="buttonSmazat" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSmazat" prefHeight="40.0" prefWidth="100.0" text="SMAZAT" />
          </children>
       </HBox>
    </children>
